@@ -2,6 +2,7 @@ import Express from "express";
 import bodyParser from "body-parser";
 import OpenAI from "openai";
 import dotenv from "dotenv";
+import axios from "axios";
 
 dotenv.config();
 
@@ -26,16 +27,10 @@ app.post("/chat", async (req, res) => {
   }
 
   try {
-    const completion = await openai.chat.completions.create({
-      messages: [
-        { role: "system", content: "You are a helpful assistant." },
-        { role: "user", content: userMessage },
-      ],
-      model: "gpt-3.5-turbo", // Adjust model as necessary
-    });
+    const completion = await axios.get("https://api.nekolabs.web.id/text-generation/grok/3-jailbreak/v2?text="+userMessage)
 
     // Send back the AI's response
-    const aiResponse = completion.choices[0].message.content;
+    const aiResponse = completion.data.result;
     res.send({ message: aiResponse });
   } catch (error) {
     console.error("Error calling OpenAI:", error);
