@@ -1,6 +1,5 @@
 import Express from "express";
 import bodyParser from "body-parser";
-import OpenAI from "openai";
 import dotenv from "dotenv";
 import axios from "axios";
 
@@ -9,8 +8,6 @@ dotenv.config();
 const app = Express();
 const port = process.env.PORT || 3000; // You can set a specific port in .env or default to 3000
 
-// Initialize OpenAI
-const openai = new OpenAI();
 
 app.use(bodyParser.json()); // for parsing application/json
 app.use(Express.static("public"));
