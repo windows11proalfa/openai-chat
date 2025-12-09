@@ -2,6 +2,11 @@ import Express from "express";
 import bodyParser from "body-parser";
 import dotenv from "dotenv";
 import axios from "axios";
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 dotenv.config();
 
@@ -12,8 +17,9 @@ const port = process.env.PORT || 3000; // You can set a specific port in .env or
 app.use(bodyParser.json()); // for parsing application/json
 app.use(Express.static("public"));
 
-app.get("/", (req, res) => {
-  res.sendFile("index.html");
+app.get('/', (req, res) => {
+  // Pastikan file berada di direktori yang sama atau subdirectory
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 // POST endpoint for processing chat messages
 app.post("/chat", async (req, res) => {
